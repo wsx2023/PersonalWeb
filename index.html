@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,15 +37,19 @@
         button:active {
             background-color: #3e8e41;
         }
+
         #video {
             width: 80%;
             max-width: 600px;
             margin: 20px auto;
         }
-        #speed, #battery {
+
+        #speed,
+        #battery {
             font-size: 20px;
             font-weight: bold;
         }
+
         .container {
             display: flex;
             justify-content: center;
@@ -52,6 +57,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Control Your Robot Car</h1>
     <img id="video" src="{{ url_for('video_feed') }}" />
@@ -61,6 +67,7 @@
         <button onclick="location.href='/accelerate'">Accelerate</button>
         <button onclick="location.href='/turn_left'">Turn Left</button>
         <button onclick="location.href='/turn_right'">Turn Right</button>
+        <button onclick="location.href='/turn_right'">Turn</button>
         <button onclick="location.href='/stop'">Stop</button>
     </div>
     <div>
@@ -70,15 +77,16 @@
     <script>
         // 定时获取速度和电量
         function updateStats() {
-            $.get('/get_speed', function(data) {
+            $.get('/get_speed', function (data) {
                 $('#speed').text(data);
             });
 
-            $.get('/get_battery', function(data) {
+            $.get('/get_battery', function (data) {
                 $('#battery').text(data);
             });
         }
         setInterval(updateStats, 2000);
     </script>
 </body>
+
 </html>
