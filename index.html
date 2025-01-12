@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+        #video {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        #speed, #battery {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Control Your Robot Car</h1>
+    <img id="video" src="{{ url_for('video_feed') }}" />
+    <div class="container">
+        <button onclick="location.href='/move_forward'">Move Forward</button>
+        <button onclick="location.href='/move_backward'">Move Backward</button>
+        <button onclick="location.href='/accelerate'">Accelerate</button>
+        <button onclick="location.href='/turn_left'">Turn Left</button>
+        <button onclick="location.href='/turn_right'">Turn Right</button>
+        <button onclick="location.href='/stop'">Stop</button>
+    </div>
+    <div>
+        <p>Speed: <span id="speed">Loading...</span> m/s</p>
+        <p>Battery: <span id="battery">Loading...</span> %</p>
+    </div>
+    <script>
+        // 定时获取速度和电量
+        function updateStats() {
+            $.get('/get_speed', function(data) {
+                $('#speed').text(data);
+            });
+
+            $.get('/get_battery', function(data) {
+                $('#battery').text(data);
+            });
+        }
+        setInterval(updateStats, 2000);
+    </script>
+</body>
+</html>
